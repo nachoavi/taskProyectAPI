@@ -16,21 +16,26 @@ export class TaskService {
     }
     return task;
   };
-  static getAllTask = async (id) => {
+  static getAllTask = async ({ userId, completed }) => {
+    const filter = {
+      userId,
+    };
+    if (completed !== undefined) {
+      filter.completed = completed === "true";
+    }
     const tasks = await prisma.task.findMany({
-      where: {
-        userId: id,
-      },
+      where: filter,
     });
     if (!tasks) {
       throw new Error("Failed to get tasks");
     }
     return tasks;
   };
-  static getTaskById = async (id) => {
+  static getTaskById = async (TaskId, userId) => {
     const task = await prisma.task.findUnique({
       where: {
-        id,
+        id: Number(TaskId),
+        userId,
       },
     });
     if (!task) {
@@ -38,6 +43,7 @@ export class TaskService {
     }
     return task;
   };
+
   static updateTask = async (id, { title, description }) => {
     const task = await prisma.task.update({
       where: {
@@ -53,6 +59,22 @@ export class TaskService {
     }
     return task;
   };
+
+  static completeTask = async (id) => {
+    const task = await prisma.task.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        completed: true,
+      },
+    });
+    if (!task) {
+      throw new Error("Failed to complete task");
+    }
+    return task;
+  };
+
   static deleteTask = async (id) => {
     const task = await prisma.task.delete({
       where: {

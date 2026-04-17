@@ -6,5 +6,20 @@ const Taskrouter = Router();
 
 Taskrouter.post("/", AuthMiddleware.validateToken, TaskController.createTask);
 Taskrouter.get("/", AuthMiddleware.validateToken, TaskController.getTasks);
+Taskrouter.get(
+  "/:id",
+  AuthMiddleware.validateToken,
+  TaskController.getTaskById,
+);
+Taskrouter.put(
+  "/complete/:id",
+  AuthMiddleware.validateToken,
+  TaskController.completeTask,
+);
+Taskrouter.delete(
+  "/:id",
+  AuthMiddleware.validateToken,
+  TaskController.deleteTask,
+);
 
 export default Taskrouter;
