@@ -5,7 +5,19 @@ import { TaskController } from "./TaskController.js";
 const Taskrouter = Router();
 
 Taskrouter.post("/", AuthMiddleware.validateToken, TaskController.createTask);
+Taskrouter.post(
+  "/admin",
+  AuthMiddleware.validateToken,
+  AuthMiddleware.isAdmin,
+  TaskController.createTaskByAdmin,
+);
 Taskrouter.get("/", AuthMiddleware.validateToken, TaskController.getTasks);
+Taskrouter.get(
+  "/admin",
+  AuthMiddleware.validateToken,
+  AuthMiddleware.isAdmin,
+  TaskController.getAllTaskByAdmin,
+);
 Taskrouter.get(
   "/:id",
   AuthMiddleware.validateToken,

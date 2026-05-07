@@ -41,10 +41,15 @@ export class AuthMiddleware {
   }
 
   static isAdmin(req, res, next) {
-    if (req.user && req.user.isAdmin) {
+    const isAdmin = req.user.role === "admin";
+    if (isAdmin) {
       next();
     } else {
-      return res.status(403).json({ message: "Access denied" });
+      return res
+        .status(403)
+        .json({
+          message: "Access denied only admins can access this resource",
+        });
     }
   }
 }

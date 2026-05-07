@@ -16,6 +16,19 @@ export class TaskService {
     }
     return task;
   };
+
+  static getAllTaskByAdmin = async () => {
+    const tasks = await prisma.task.findMany({
+      include: {
+        user: true,
+      },
+    });
+    if (!tasks) {
+      throw new Error("Failed to get tasks");
+    }
+    return tasks;
+  };
+
   static getAllTask = async ({ userId, completed }) => {
     const filter = {
       userId,
@@ -78,7 +91,7 @@ export class TaskService {
   static deleteTask = async (id) => {
     const task = await prisma.task.delete({
       where: {
-        id,
+        id: Number(id),
       },
     });
     if (!task) {
