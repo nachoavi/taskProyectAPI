@@ -3,12 +3,13 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class TaskService {
-  static createTask = async ({ title, description, userId }) => {
+  static createTask = async ({ title, description, userId, dueDate }) => {
     const task = await prisma.task.create({
       data: {
         title,
         description,
         userId,
+        dueDate,
       },
     });
     if (!task) {

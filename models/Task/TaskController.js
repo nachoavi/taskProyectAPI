@@ -12,8 +12,13 @@ export class TaskController {
   };
 
   static createTaskByAdmin = async (req, res) => {
-    const { title, description, userId } = req.body;
-    const task = await TaskService.createTask({ title, description, userId });
+    const { title, description, userId, dueDate } = req.body;
+    const task = await TaskService.createTask({
+      title,
+      description,
+      userId,
+      dueDate,
+    });
     if (!task) {
       return res.status(500).json({ error: "Failed to create task" });
     }
