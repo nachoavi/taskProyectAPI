@@ -1,6 +1,6 @@
 import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
+import { corsMiddleware } from "./shared/middlewares/corsMiddleware.js";
+
 import rateLimit from "express-rate-limit";
 import authRouter from "./models/Auth/AuthRouter.js";
 import taskRouter from "./models/Task/TaskRouter.js";
@@ -9,7 +9,7 @@ import { adminUserRouter } from "./models/AdminUsers/userRouter.js";
 const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(corsMiddleware);
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
