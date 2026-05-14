@@ -98,6 +98,6 @@ export class TaskService {
     if (!task) {
       throw new Error("Failed to delete task");
     }
-    return task;
+    return true;
   };
 }

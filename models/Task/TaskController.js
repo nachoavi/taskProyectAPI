@@ -68,7 +68,7 @@ export class TaskController {
   static deleteTask = async (req, res) => {
     const taskId = req.params.id;
     const task = await TaskService.deleteTask(taskId);
-    if (!task) {
+    if (task === false) {
       return res.status(500).json({ error: "Failed to delete task" });
     }
     return res.status(200).json({ message: "Task deleted successfully" });
