@@ -5,26 +5,6 @@ dotenv.config();
 const SECRET = process.env.JWT_SECRET;
 
 export class AuthMiddleware {
-  static validateRegister(req, res, next) {
-    const { username, email, password } = req.body;
-
-    if (!username || !email || !password) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
-
-    next();
-  }
-
-  static validateLogin(req, res, next) {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
-
-    next();
-  }
-
   static validateToken(req, res, next) {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
@@ -45,11 +25,9 @@ export class AuthMiddleware {
     if (isAdmin) {
       next();
     } else {
-      return res
-        .status(403)
-        .json({
-          message: "Access denied only admins can access this resource",
-        });
+      return res.status(403).json({
+        message: "Access denied only admins can access this resource",
+      });
     }
   }
 }
