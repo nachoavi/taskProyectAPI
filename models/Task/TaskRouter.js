@@ -1,12 +1,19 @@
 import { Router } from "express";
 import { AuthMiddleware } from "../../shared/middlewares/authMiddleware.js";
 import { TaskController } from "./TaskController.js";
+import { ValidationsMiddleware } from "../../shared/middlewares/validationsMiddleware.js";
 
 const Taskrouter = Router();
 
-Taskrouter.post("/", AuthMiddleware.validateToken, TaskController.createTask);
+Taskrouter.post(
+  "/",
+  ValidationsMiddleware.validateCreateTask,
+  AuthMiddleware.validateToken,
+  TaskController.createTask,
+);
 Taskrouter.post(
   "/admin",
+  ValidationsMiddleware.validateCreateTask,
   AuthMiddleware.validateToken,
   AuthMiddleware.isAdmin,
   TaskController.createTaskByAdmin,
