@@ -4,7 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_OPTIONS='--experimental-vm-modules' NODE_ENV=test jest",
+    "test:watch": "NODE_OPTIONS='--experimental-vm-modules' NODE_ENV=test jest --watch",
+    "test:coverage": "NODE_OPTIONS='--experimental-vm-modules' NODE_ENV=test jest --coverage",
     "postinstall2": "npx prisma migrate dev --name init_postgres",
     "postinstall": "prisma generate"
   },
@@ -24,6 +26,8 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "jest": "^30.4.2",
+    "nodemon": "^3.1.14",
+    "supertest": "^7.2.2"
   }
 }

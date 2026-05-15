@@ -29,8 +29,8 @@ export const taskSchema = z.object({
     .trim(),
   completed: z.boolean().optional(),
   userId: z.number().optional(),
-  createdAt: z.date().optional(),
-  dueDate: z.date({
+  createdAt: z.coerce.date().optional(),
+  dueDate: z.coerce.date({
     required_error: "Due date is required",
   }),
   state: z.string().optional(),
